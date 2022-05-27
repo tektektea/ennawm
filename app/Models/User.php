@@ -65,6 +65,15 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
+    public function rents(): HasMany
+    {
+        return $this->hasMany(Rent::class);
+    }
+
+    public function videos(): BelongsToMany
+    {
+        return $this->belongsToMany(Video::class);
+    }
 
 
 //    public function sendPasswordResetNotification($token)

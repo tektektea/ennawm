@@ -9,8 +9,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration
 {
     /**
-     * Run the migrations.
-     *
+     * Run the migrations
      * @return void
      */
     public function up()
@@ -18,6 +17,7 @@ return new class extends Migration
         Schema::create('rents', function (Blueprint $table) {
             $table->id();
             $table->string('otp');
+            $table->integer('ttl')->default(0);
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Video::class);
             $table->string('remark')->nullable();

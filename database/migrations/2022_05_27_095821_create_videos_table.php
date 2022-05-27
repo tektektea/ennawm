@@ -17,7 +17,9 @@ return new class extends Migration
             $table->id();
             $table->string('uid')->unique();
             $table->string('title');
-            $table->string('type')->default('public');
+            $table->string('poster_url')->nullable();
+            $table->string('trailer_url')->nullable();
+            $table->decimal('price')->default(0);
             $table->text('description');
             $table->timestamps();
         });

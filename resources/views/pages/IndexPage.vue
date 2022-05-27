@@ -3,7 +3,7 @@
         <template #content>
             <div class="md:container mx-auto">
                 <div class="">
-                    <FeatureVideos/>
+                    <FeatureVideos :videos="$page.props.features"/>
                 </div>
                 <div class="">
                     <HeroSlideComponent/>

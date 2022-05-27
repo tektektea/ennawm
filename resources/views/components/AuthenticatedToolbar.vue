@@ -1,14 +1,17 @@
 <template>
-    <div class="md:container mx-auto shadow-sm flex justify-between items-center">
+    <div class="md:container sm:w-full  md:mx-auto shadow-sm flex justify-between items-center">
         <div class="flex items-center gap-2">
-            <div class="text-xl font-medium">Ennawm tv</div>
-            <q-item>
+            <div @click="backHome" class="flex gap-1 cursor-pointer">
+                <q-icon size="32px" name="play_arrow" color="accent"/>
+                <div class="text-xl font-medium">Ennawm tv</div>
+            </div>
+            <q-item class="xs-hide">
                 <q-item-section><q-item-label>Movies</q-item-label></q-item-section>
             </q-item>
-            <q-item>
+            <q-item class="xs-hide">
                 <q-item-section><q-item-label>Series</q-item-label></q-item-section>
             </q-item>
-            <q-item>
+            <q-item class="xs-hide">
                 <q-item-section><q-item-label>Short film</q-item-label></q-item-section>
             </q-item>
         </div>
@@ -58,5 +61,7 @@ const logout=e=>{
         onError:()=>q.notify({type:'negative',message:'Something went wrong'})
     })
 }
+const backHome = () => Inertia.get(route('home'))
+
 
 </script>

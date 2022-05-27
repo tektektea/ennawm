@@ -3,12 +3,12 @@
         <q-page padding>
             <div class="flex justify-between items-center">
                 <div>
-                    <div class="my-title">FAQ</div>
-                    <div class="text-caption">Frequently asked question</div>
+                    <div class="text-lg font-semibold">Videos</div>
+                    <div class="text-caption">List of uploaded videos</div>
                 </div>
                 <q-breadcrumbs active-color="primary" class="text-gray-500 text-sm">
                     <q-breadcrumbs-el icon="dashboard" label="Dashboard"/>
-                    <q-breadcrumbs-el icon="feed" label="Faq"/>
+                    <q-breadcrumbs-el icon="movie" label="Videos"/>
                 </q-breadcrumbs>
             </div>
 
@@ -25,28 +25,27 @@
                         <q-icon name="search"/>
                     </template>
                 </q-input>
-                <q-btn :href="route('faq.create')" color="primary" label="New Faq" rounded/>
+                <q-btn :href="route('video.create')" color="primary" label="New Video" rounded/>
             </div>
             <q-separator class="full-width q-my-sm"/>
             <div class="col-12">
-                <q-list separator>
-                    <q-item class="q-pa-none" v-for="(item,index) in listData.data"
+                <q-list separator class="bg-white shadow-sm rounded-borders">
+                    <q-item  v-for="(item,index) in listData.data"
                             :key="item.id"
                             @click="onMessageClick(item)">
                         <q-item-section avatar>
-                            <q-chip :label="index+1" square/>
+                            <img width="120" :src="item.poster_url"/>
                         </q-item-section>
                         <q-item-section>
-                            <q-item-label>{{ item?.question }}</q-item-label>
-                            <q-item-label caption>{{ item?.answer || 'NA' }}</q-item-label>
+                            <q-item-label>{{ item?.title }}</q-item-label>
+                            <q-item-label caption>RS.{{ item?.price || 'NA' }}</q-item-label>
+                            <q-item-label caption>{{ item?.description || 'NA' }}</q-item-label>
                         </q-item-section>
                         <q-item-section side>
                             <!--                            <p class="q-ma-none text-caption text-center">{{formatDateTime(item.created_at)}}</p>-->
 
                             <div class="flex flex-inline justify-center q-gutter-sm">
-                                <q-toggle v-model="item.published" label="published?" left-label
-                                          @click="publish(item)"/>
-                                <q-btn :href="route('faq.edit',item.id)" icon="edit" outline round size="12px"/>
+                                <q-btn :href="route('video.edit',item.id)" icon="edit" outline round size="12px"/>
                                 <q-btn color="negative" icon="delete" outline round size="12px"
                                        @click="handleDelete(item)"/>
 
@@ -84,12 +83,7 @@ const localState = reactive({
         total: 1
     },
 })
-const publish = item => {
-    Inertia.put(route('faq.publish', item.id), {}, {
-        onSuccess: () => q.notify({type: 'positive', message: usePage().props.value.flash.success}),
-        onError: () => q.notify({type: 'negative', message: usePage().props.value.flash.error}),
-    });
-}
+
 const handleDelete = (item) => {
     q.dialog({
         title: 'Confirm',
@@ -97,7 +91,7 @@ const handleDelete = (item) => {
         cancel: true,
         persistent: true
     }).onOk(() => {
-        Inertia.delete(route('faq.destroy', item.id))
+        Inertia.delete(route('video.destroy', item.id))
     }).onCancel(() => {
         // console.log('>>>> Cancel')
     }).onDismiss(() => {
@@ -128,7 +122,6 @@ const fetchMessage = (page) => {
 onMounted(() => {
     const page = usePage();
 
-    console.log('page=>> ', page.props.value?.list);
     const {current_page, total, per_page, data} = page.props.value?.list
     localState.listData.current_page = current_page;
     localState.listData.data = data;

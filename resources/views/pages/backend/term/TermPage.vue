@@ -13,9 +13,8 @@
 </template>
 <script setup>
 import BackendLayout from "../../../layouts/BackendLayout.vue";
-export default {
-    components: {BackendLayout}
-}
+
+
 const props=defineProps({
     data:Object
 })

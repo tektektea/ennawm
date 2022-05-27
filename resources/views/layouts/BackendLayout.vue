@@ -18,7 +18,7 @@
             <!-- drawer content -->
         </q-drawer>
 
-        <q-page-container>
+        <q-page-container class="bg-gray-100">
             <slot name="content"></slot>
         </q-page-container>
 

@@ -1,5 +1,5 @@
 <template>
-    <BackLayout>
+    <BackendLayout>
         <template #content>
             <q-page padding>
                 <div class="flex justify-between items-center">
@@ -43,14 +43,14 @@
                 </q-form>
             </q-page>
         </template>
-    </BackLayout>
+    </BackendLayout>
 </template>
 <script setup>
-import BackendLayout from "../../../layouts/BackendLayout.vue";
 import {useForm, usePage} from "@inertiajs/inertia-vue3";
 import {useQuasar} from "quasar";
 import {onMounted} from "vue";
 import {Inertia} from "@inertiajs/inertia";
+import BackendLayout from "../../../layouts/BackendLayout.vue";
 
 const q = useQuasar();
 const {data,errors}=defineProps({
