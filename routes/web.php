@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\VideoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -23,6 +24,7 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('home');
+
 Route::get('/admin', function () {
     return Inertia::render('backend/DashboardPage', [
         'canLogin' => Route::has('login'),
@@ -31,17 +33,16 @@ Route::get('/admin', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 })->name('dashboard');
-Route::get('/test', function () {
-    return Inertia::render('front/test-page', [
-        'canLogin' => Route::has('login'),
-        'canRegister' => Route::has('register'),
-        'laravelVersion' => Application::VERSION,
-        'phpVersion' => PHP_VERSION,
-    ]);
-});
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+Route::group(['prefix' => 'video','middleware'=>'auth'], function () {
+    Route::get('{video}',[VideoController::class,'show']);
+});
+
+
 
 require __DIR__.'/auth.php';

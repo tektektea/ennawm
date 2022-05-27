@@ -20,7 +20,7 @@ export default defineConfig({
 			],
 		}),
         quasar({
-            // sassVariables: './css/quasar-variables.sass'
+            // sassVariables: 'quasar-variables.sass'
         })
 	],
 })

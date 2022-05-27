@@ -1,55 +1,43 @@
 
 <template>
-    <div class="h-screen w-screen bg-gray-100 dark:bg-gray-800">
-        <header class="shadow-sm w-full fixed top-0 bg-white">
-            <nav class="w-full  p-6  lg:flex lg:justify-between lg:items-center">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <a class="text-2xl font-bold text-gray-800 dark:text-white lg:text-3xl hover:text-gray-700 dark:hover:text-gray-300" href="#">Ennawm</a>
-                    </div>
+        <q-layout @scroll="onScroll" view="hHh lpR fFf">
 
-                    <!-- Mobile menu button -->
-                    <div class="flex lg:hidden">
-                        <button type="button"
-                                class="text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
-                                aria-label="toggle menu">
-                            <svg viewBox="0 0 24 24" class="w-6 h-6 fill-current">
-                                <path fill-rule="evenodd"
-                                      d="M4 5h16a1 1 0 0 1 0 2H4a1 1 0 1 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2zm0 6h16a1 1 0 0 1 0 2H4a1 1 0 0 1 0-2z">
-                                </path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+            <q-header  :class="headerClass">
+                <q-toolbar style="height: 70px">
+                   <authenticated-toolbar/>
+                </q-toolbar>
+            </q-header>
 
-                <!-- Mobile Menu open: "block", Menu closed: "hidden" -->
-                <div class="flex flex-col mt-4 space-y-2 lg:mt-0 lg:flex-row lg:-px-8 lg:space-y-0">
-                    <a class="text-gray-700 transition-colors duration-200 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500"
-                       href="#">Home</a>
-                    <a class="text-gray-700 transition-colors duration-200 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500"
-                       href="#">Components</a>
-                    <a class="text-gray-700 transition-colors duration-200 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500"
-                       href="#">Pricing</a>
-                    <a class="text-gray-700 transition-colors duration-200 transform lg:mx-8 dark:text-gray-200 dark:hover:text-blue-400 hover:text-blue-500"
-                       href="#">Contact</a>
-                </div>
+            <q-page-container class="md:container mx-auto">
+                <slot name="content"></slot>
+            </q-page-container>
 
-                <a class="block px-5 py-2 mt-4 font-medium leading-5 text-center text-white capitalize bg-blue-600 rounded-lg lg:mt-0 hover:bg-blue-500 lg:w-auto"
-                   href="#">
-                    Get started
-                </a>
-            </nav>
-        </header>
+            <q-footer elevated class="bg-grey-8 text-white">
+                <q-toolbar>
+                    <q-toolbar-title>
+                        <q-avatar>
+                            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
+                        </q-avatar>
+                        <div>Title</div>
+                    </q-toolbar-title>
+                </q-toolbar>
+            </q-footer>
 
-        <div class="container px-6 py-16 mx-auto mt-20 text-center">
-           <slot name="content"></slot>
-        </div>
-    </div>
+        </q-layout>
 
 </template>
 <script setup>
+import AuthenticatedToolbar from "../components/AuthenticatedToolbar.vue";
+import {computed, ref} from "vue";
 const {ziggy}=defineProps({ziggy:Object})
 const click=e=>{
     console.log("test ", ziggy);
+}
+const position = ref(0);
+const headerClass=computed(()=>position.value===0?['bg-transparent' ,'text-gray-100', 'font-semibold']:['bg-primary', 'shadow-md' ,'text-gray-100', 'font-semibold'])
+
+const onScroll=val=>{
+    console.log(val);
+    position.value = val.position;
 }
 </script>

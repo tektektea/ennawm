@@ -7,7 +7,7 @@ import '@quasar/extras/material-icons/material-icons.css'
 
 // Import Quasar css
 import 'quasar/src/css/index.sass'
-import {Quasar} from "quasar";
+import {Quasar,Notify,Loading,Dialog} from "quasar";
 
 createInertiaApp({
 	resolve: (name) => importPageComponent(name, import.meta.glob('../views/pages/**/*.vue')),
@@ -15,7 +15,17 @@ createInertiaApp({
 		createApp({ render: () => h(app, props) })
 			.use(plugin)
             .use(Quasar,{
-                plugins: {},
+                plugins: {Notify,Loading,Dialog},
+                config:{
+                    brand: {
+                        primary: '#131a27',
+                        secondary:'#192133',
+                        accent: '#b08927',
+                        dark: '#2c3243'
+                        // ... or all other brand colors
+                    },
+                }
+
             })
             .mixin({ methods: { route: window.route } })
 			.mount(el)
