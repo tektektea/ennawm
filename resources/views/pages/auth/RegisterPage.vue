@@ -1,9 +1,9 @@
 <template>
     <div class="h-screen w-screen grid grid-cols-5">
-        <div class="col-span-2 bg-white flex items-center justify-center">
+        <div class="col-span-5 md:col-span-2 bg-white flex items-center justify-center">
                     <div class="flex lg:w-4/6">
                         <div class="flex-1">
-                            <div class="text-center">
+                            <div class="text-center mt-6">
                                 <h2 class="text-4xl font-bold text-center text-gray-700 dark:text-white">ENNAWM.tv</h2>
 
                                 <p class="mt-3 text-gray-500 dark:text-gray-300">Sign up to create account</p>
@@ -103,7 +103,6 @@
                             </div>
                         </div>
                     </div>
-
         </div>
         <div class="col-span-3 bg-primary"></div>
     </div>
@@ -113,7 +112,9 @@
 
 import {useForm} from "@inertiajs/inertia-vue3";
 import {reactive} from "vue";
+import {useQuasar} from "quasar";
 
+const q = useQuasar();
 const localState=reactive({
     passwordType:'password',
     confirmPasswordType:'password'
@@ -126,6 +127,9 @@ const form = useForm({
     password_confirmation:'',
 });
 const submit=e=>{
-
+    form.post(route('register.store'),{
+        preserveState:true,
+        onSuccess:()=>q.notify({'type':'positive',message:'Registration success'})
+    })
 }
 </script>

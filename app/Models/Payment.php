@@ -11,7 +11,7 @@ class Payment extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['amount', 'transaction_id', 'remark'];
+    protected $fillable = ['amount','user_id', 'order_id','status', 'remark'];
 
     public function user(): BelongsTo
     {

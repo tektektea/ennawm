@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Rent;
+use App\Models\User;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
@@ -17,8 +19,8 @@ class VideoController extends Controller
         $search = $request->get('name');
         $type = $request->get('type');
         $list = Video::query()
-            ->when($search,fn($q)=>$q->where('name','LIKE',"$search%"))
-            ->when($type,fn($q)=>$q->where('type',"$type%"))
+            ->when($search, fn($q) => $q->where('name', 'LIKE', "$search%"))
+            ->when($type, fn($q) => $q->where('type', "$type%"))
             ->paginate();
         return Inertia::render('backend/video/ListPage', [
             'list' => $list
@@ -37,10 +39,10 @@ class VideoController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData=$this->validate($request, [
-            'uid'=>'required|unique:videos',
-            'title'=>'required',
-            'price'=>'required|numeric',
+        $validatedData = $this->validate($request, [
+            'uid' => 'required|unique:videos',
+            'title' => 'required',
+            'price' => 'required|numeric',
             'poster_url' => 'required|url',
             'trailer_url' => 'required|url',
             'description' => 'string',
@@ -50,11 +52,12 @@ class VideoController extends Controller
         return Redirect::to(route('video.index'));
 
     }
-    public function update(Request $request,Video $video)
+
+    public function update(Request $request, Video $video)
     {
-        $validatedData=$this->validate($request, [
-            'uid'=>['required',Rule::unique('videos','uid')->ignore($video->id)],
-            'title'=>'required',
+        $validatedData = $this->validate($request, [
+            'uid' => ['required', Rule::unique('videos', 'uid')->ignore($video->id)],
+            'title' => 'required',
             'postal_url' => 'required|url',
             'trailer_url' => 'required|url',
             'description' => 'string',
@@ -73,25 +76,31 @@ class VideoController extends Controller
 
     public function show(Request $request, Video $video)
     {
-        //TODO::check rental
-        if (true) {
-            $key = env('VDO_API_KEY');
-            $response=Http::withHeaders([
-                'Authorization'=>"Apisecret $key",
-                'Content-Type'=>'application/json'
-            ])->post("https://dev.vdocipher.com/api/videos/$video->uid/otp",[
-                'ttl'=>300
+        $user = $request->user();
+        $rental = $user->rents()->where('video_id', $video?->id)->first();
+        $expire = blank($rental) || now()->lessThan($rental->created_at->addSeconds($rental->ttl));
+
+        if ($expire) {
+            Session::flash('error', 'No valid rental record found');
+            return \redirect()->route('rent.create', [
+                'video' => $video->id
             ]);
-
-            $result = json_decode($response->body(),true);
-
-            return inertia('front/video/VideoPlay', [
-                'otp' => $result['otp'],
-                'playbackInfo'=>$result['playbackInfo']
-                ]);
         }
-
         return inertia('front/video/VideoPlay', [
+            'otp' => $rental->otp,
+            'playbackInfo' => $rental->playback_info,
+        ]);
+
+    }
+
+    public function free(Request $request)
+    {
+        $search = $request->get('search');
+        $list = Video::query()->where('price', '<=', 0)
+            ->when($search, fn($q) => $q->where('title', 'LIKE', "%$search"))
+            ->paginate();
+        return Inertia::render('front/FreeVideoPage', [
+            'list' => $list
         ]);
     }
 }

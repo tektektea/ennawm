@@ -10,7 +10,7 @@ class Rent extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'video_id', 'otp', 'ttl','remark'];
+    protected $fillable = ['user_id', 'video_id', 'otp','playback_info', 'ttl','remark'];
 
     public function user(): BelongsTo
     {

@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\User::class);
             $table->decimal('amount');
-            $table->string('transaction_id')->nullable();
+            $table->string('order_id')->nullable();
+            $table->string('status')->nullable();
             $table->string('remark')->nullable();
             $table->timestamps();
         });

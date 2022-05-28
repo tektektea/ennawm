@@ -17,6 +17,7 @@ return new class extends Migration
         Schema::create('rents', function (Blueprint $table) {
             $table->id();
             $table->string('otp');
+            $table->string('playback_info');
             $table->integer('ttl')->default(0);
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Video::class);

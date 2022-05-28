@@ -28,14 +28,20 @@
 </template>
 <script setup>
 import AuthenticatedToolbar from "../components/AuthenticatedToolbar.vue";
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
+import {usePage} from "@inertiajs/inertia-vue3";
 const {ziggy}=defineProps({ziggy:Object})
 const click=e=>{
     console.log("test ", ziggy);
 }
+const success=computed(()=>usePage().props.value?.success)
+const error=computed(()=>usePage().props.value?.error)
 const position = ref(0);
 const headerClass=computed(()=>position.value===0?['bg-transparent' ,'text-gray-100', 'font-semibold']:['bg-primary', 'shadow-md' ,'text-gray-100', 'font-semibold'])
 
+watch(success,(newVal)=>{
+    console.log("New val "+newVal)
+})
 const onScroll=val=>{
     console.log(val);
     position.value = val.position;

@@ -16,7 +16,7 @@ class VideoSeeder extends Seeder
     public function run()
     {
         Video::query()->upsert([
-            ['id'=>1,'uid'=>'604ce67e98c743a99fc6026e227d85cd','title'=>'aitikon','description'=>'dff']
+            ['id'=>1,'price'=>10,'poster_url'=>'https://images.unsplash.com/photo-1550355291-bbee04a92027','trailer_url'=>'https://www.youtube.com/watch?v=jLx8BjUuDJc','uid'=>'604ce67e98c743a99fc6026e227d85cd','title'=>'aitikon','description'=>'dff']
         ],'id');
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="md:container sm:w-full  md:mx-auto shadow-sm flex justify-between items-center">
+    <div class="container w-full  mx-auto shadow-sm flex justify-between items-center">
         <div class="flex items-center gap-2">
             <div @click="backHome" class="flex gap-1 cursor-pointer">
                 <q-icon size="32px" name="play_arrow" color="accent"/>
@@ -16,6 +16,7 @@
             </q-item>
         </div>
         <div class="flex gap-2">
+            <q-btn :href="route('video.free')" color="accent" label="Free Video"/>
             <q-btn-dropdown no-caps flat v-if="$page.props.user" :label="$page.props.user?.name ?? 'Guest'">
                 <q-list bordered separator class="bg-gray-800 rounded-borders text-gray-100">
                     <q-item clickable>

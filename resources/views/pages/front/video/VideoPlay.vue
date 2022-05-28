@@ -2,26 +2,30 @@
     <FrontLayout>
         <template #content>
             <q-page class="bg-secondary">
-                <div>{{JSON.stringify(props.video)}}</div>
-                <div id="embedBox">
+                <div class="font-semibold text-lg text-gray-100">{{video?.title}}</div>
+                <div :style="boxStyle" id="embedBox">
                 </div>
-                <div>{{props.otp}}</div>
-                <div>{{props.playbackInfo}}</div>
+
             </q-page>
         </template>
     </FrontLayout>
 
 </template>
 <script setup>
-import {onMounted} from "vue";
+import {computed, onMounted} from "vue";
 import FrontLayout from "../../../layouts/FrontLayout.vue";
+import {useQuasar} from "quasar";
+import {usePage} from "@inertiajs/inertia-vue3";
 const props=defineProps({
     video:Object,
     otp:String,
     playbackInfo: String
 })
+const q = useQuasar();
 
 onMounted(()=>{
+    const message = usePage().props.value?.error;
+    message && q.notify({type:'negative',message:message || 'Something went wrong'})
     var video = new VdoPlayer({
         otp: props.otp,
         playbackInfo: props.playbackInfo,
@@ -36,6 +40,12 @@ onMounted(()=>{
 //   console.log('loaded');
 // });
 })
+
+
+const boxStyle=computed(()=>({
+    width:q.screen.width,
+    height:q.screen.height
+}))
 
 
 </script>

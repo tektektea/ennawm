@@ -33,7 +33,22 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::resource('video', VideoController::class);
+Route::resource('video', VideoController::class)->middleware('auth');
+Route::get('free', [VideoController::class, 'free'])
+    ->name('video.free');
+
+
+Route::get('rent/{video}', [\App\Http\Controllers\RentController::class, 'create'])
+    ->name('rent.create')
+    ->middleware('auth');
+Route::post('rent/{video}', [\App\Http\Controllers\RentController::class, 'store'])
+    ->name('rent.store')
+    ->middleware('auth');
+
+Route::post('payment/{video}', [\App\Http\Controllers\PaymentController::class, 'createOrder'])
+    ->name('payment.create')
+    ->middleware('auth');
+Route::post('rent/{video}/payment/{payment}',[\App\Http\Controllers\PaymentController::class,'postPayment'])->name('callback.url');
 
 
 
