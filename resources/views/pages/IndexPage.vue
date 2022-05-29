@@ -1,17 +1,14 @@
 <template>
     <FrontLayout>
         <template #content>
-            <div class="md:container mx-auto">
+            <div class="md:container flex flex-col md:mx-auto">
                 <div class="">
                     <FeatureVideos :videos="$page.props.features"/>
                 </div>
-                <div class="">
-                    <HeroSlideComponent/>
+                <div class="my-6 text-white">
+                    <VideoList :videos="$page.props.features"/>
                 </div>
-                <div class="my-6">
-                    <FeatureComponent/>
-                </div>
-                <div class="my-6">
+                <div class="my-6 text-white">
                     <FaqComponent/>
                 </div>
                 <div class="my-6">
@@ -24,11 +21,10 @@
 </template>
 <script setup>
 import FrontLayout from "../layouts/FrontLayout.vue";
-import FeatureComponent from "../components/FeatureComponent.vue";
 import FaqComponent from "../components/FaqComponent.vue";
 import DownloadAppComponent from "../components/DownloadAppComponent.vue";
-import HeroSlideComponent from "../components/HeroSlideComponent.vue";
 import FeatureVideos from "../components/FeatureVideos.vue";
+import VideoList from "../components/VideoList.vue";
 
 
 </script>

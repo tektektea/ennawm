@@ -78,7 +78,7 @@ class VideoController extends Controller
     {
         $user = $request->user();
         $rental = $user->rents()->where('video_id', $video?->id)->first();
-        $expire = blank($rental);
+        $expire = blank($rental) || $rental->rent_at->addSeconds($rental->ttl)->lessThan(now());
 
         if ($expire) {
             Session::flash('error', 'No valid rental record found');

@@ -22,6 +22,7 @@ return new class extends Migration
             $table->foreignIdFor(User::class);
             $table->foreignIdFor(Video::class);
             $table->string('remark')->nullable();
+            $table->timestamp('rent_at')->useCurrent();
             $table->timestamps();
         });
     }

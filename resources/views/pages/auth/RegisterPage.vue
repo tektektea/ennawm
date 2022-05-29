@@ -1,108 +1,74 @@
 <template>
     <div class="h-screen w-screen grid grid-cols-5">
-        <div class="col-span-5 md:col-span-2 bg-white flex items-center justify-center">
-                    <div class="flex lg:w-4/6">
-                        <div class="flex-1">
-                            <div class="text-center mt-6">
-                                <h2 class="text-4xl font-bold text-center text-gray-700 dark:text-white">ENNAWM.tv</h2>
-
-                                <p class="mt-3 text-gray-500 dark:text-gray-300">Sign up to create account</p>
-                            </div>
-
-                            <div class="mt-8 bg-white p-16">
-                                <q-form @submit="submit">
-                                    <div>
-                                        <label for="name" class="block font-semibold mb-2 text-sm text-gray-600 dark:text-gray-200">Name</label>
-                                        <q-input type="text"
-                                                 outlined
-                                                 placeholder="Name"
-                                                 dense
-                                                 v-model="form.name"
-                                                 :rules="[
-                                             val=>!!val || 'Name is required',
-                                         ]"
-                                                 id="name"/>
-                                    </div>
-                                    <div class="mt-2">
-                                        <label for="email" class="block font-semibold mb-2 text-sm text-gray-600 dark:text-gray-200">Email Address</label>
-                                        <q-input type="email"
-                                                 outlined
-                                                 placeholder="Email"
-                                                 dense
-                                                 v-model="form.email"
-                                                 :rules="[
-                                             val=>!!val || 'Email is required',
-                                             val => val.length >=6 || 'Please enter atleast 6 digit alphanumeric'
-                                         ]"
-                                                 id="email"/>
-                                    </div>
-                                    <div class="mt-2">
-                                        <label for="mobile" class="block font-semibold mb-2 text-sm text-gray-600 dark:text-gray-200">Mobile No</label>
-                                        <q-input type="text"
-                                                 outlined
-                                                 mask="##########"
-                                                 placeholder="Mobile No"
-                                                 dense
-                                                 v-model="form.mobile"
-                                                 :rules="[
-                                             val=>!!val || 'Mobile No is required',
-                                         ]"
-                                                 id="mobile"/>
-                                    </div>
-
-                                    <div class="mt-2">
-                                        <label for="password" class="block font-semibold text-gray-600 dark:text-gray-200">Password</label>
-                                        <q-input :type="localState.passwordType"
-                                                 outlined
-                                                 placeholder="Password"
-                                                 dense
-                                                 v-model="form.password"
-                                                 :rules="[
-                                             val=>!!val || 'Password is required'
-                                         ]"
-                                                 id="password">
-                                            <template #append>
-                                                <q-icon :name="localState.passwordType==='text'?'visibility':'visibility_off'"
-                                                        @click="localState.passwordType=localState.passwordType==='text'?'password':'text'"
-                                                />
-                                            </template>
-                                        </q-input>
-                                    </div>
-                                    <div class="mt-2">
-                                        <label for="confirm" class="block font-semibold text-gray-600 dark:text-gray-200">Confirm Password</label>
-                                        <q-input :type="localState.confirmPasswordType"
-                                                 outlined
-                                                 placeholder="Confirm password"
-                                                 dense
-                                                 v-model="form.password_confirmation"
-                                                 :rules="[
-                                             val=>!!val || 'Confirm password is required',
-                                             val=>val===form.password || 'Confirm password must match password'
-                                         ]"
-                                                 id="confirm">
-                                            <template #append>
-                                                <q-icon :name="localState.confirmPasswordType==='text'?'visibility':'visibility_off'"
-                                                        @click="localState.confirmPasswordType=localState.confirmPasswordType==='text'?'password':'text'"
-                                                />
-                                            </template>
-                                        </q-input>
-                                    </div>
-
-
-                                    <div class="mt-6">
-                                        <button type="submit"
-                                                :disabled="form.processing"
-                                                class="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-500 rounded-md hover:bg-blue-400 focus:outline-none focus:bg-blue-400 focus:ring focus:ring-blue-300 focus:ring-opacity-50">
-                                            Sign in
-                                        </button>
-                                    </div>
-
-                                </q-form>
-
-                                <p class="mt-6 text-sm text-center text-gray-400">I already have an account? <a :href="route('login')" class="text-blue-500 focus:outline-none focus:underline hover:underline">Sign in</a>.</p>
-                            </div>
-                        </div>
-                    </div>
+        <div class="col-span-5 md:col-span-2 bg-white flex flex-col items-center justify-center">
+            <q-form class="w-full p-8 md:w-4/6" @submit="submit" @reset="reset">
+                <div class="text-2xl   w-full text-center">Ennawm tv</div>
+                <div class="text-lg  my-6 w-full text-center">Sign up to become a member</div>
+                <q-separator class="w-full my-6"/>
+                <q-input v-model="form.name"
+                         outlined
+                         label="Name"
+                         :error="!!$page.props.errors.name"
+                         :error-message="$page.props.errors.name"
+                         :rules="[
+                             value => !!value || 'Name is required'
+                         ]"
+                />
+                <q-input v-model="form.email"
+                         type="email"
+                         outlined
+                         label="Email"
+                         :error="!!$page.props.errors.email"
+                         :error-message="$page.props.errors.email"
+                         :rules="[
+                             value => !!value || 'Email is required'
+                         ]"
+                />
+                <q-input v-model="form.mobile"
+                         outlined
+                         label="Mobile"
+                         mask="##########"
+                         :error="!!$page.props.errors.mobile"
+                         :error-message="$page.props.errors.mobile"
+                         :rules="[
+                             value => !!value || 'Mobile is required'
+                         ]"
+                />
+                <q-input v-model="form.password"
+                         :type="passwordType"
+                         outlined
+                         label="Password"
+                         :error="!!$page.props.errors.password"
+                         :error-message="$page.props.errors.password"
+                         :rules="[
+                             value => !!value || 'Password is required',
+                             value => value.length >6 || 'Too short'
+                         ]"
+                >
+                    <template #append>
+                        <q-icon @click="passwordType==='password'?'text':'password'" :name="passwordType==='password'?'visibility_off':'visibility'"/>
+                    </template>
+                </q-input>
+                <q-input v-model="form.password_confirmation"
+                         :type="confirmType"
+                         outlined
+                         label="Password Confirmation"
+                         :error="!!$page.props.errors.password_confirmation"
+                         :error-message="$page.props.errors.password_confirmation"
+                         :rules="[
+                             value => !!value || 'Confirm Password is required',
+                             value => value ===form.password || 'Confirm password must match password'
+                         ]"
+                >
+                    <template #append>
+                        <q-icon @click="confirmType==='password'?'text':'password'" :name="confirmType==='password'?'visibility_off':'visibility'"/>
+                    </template>
+                </q-input>
+                <div class="flex gap-2">
+                    <q-btn :disable="form.processing" type="submit" color="accent" label="Register"/>
+                    <q-btn type="reset" outline color="negative" label="Clear"/>
+                </div>
+            </q-form>
         </div>
         <div class="col-span-3 bg-primary"></div>
     </div>
@@ -111,25 +77,30 @@
 <script setup>
 
 import {useForm} from "@inertiajs/inertia-vue3";
-import {reactive} from "vue";
+import {reactive,ref} from "vue";
 import {useQuasar} from "quasar";
 
 const q = useQuasar();
-const localState=reactive({
-    passwordType:'password',
-    confirmPasswordType:'password'
+const localState = reactive({
+    passwordType: 'password',
+    confirmPasswordType: 'password'
 })
+const confirmType = ref('password');
+const passwordType = ref('password');
 const form = useForm({
-    name:'',
-    mobile:'',
-    email:'',
-    password:'',
-    password_confirmation:'',
+    name: '',
+    mobile: '',
+    email: '',
+    password: '',
+    password_confirmation: '',
 });
-const submit=e=>{
-    form.post(route('register.store'),{
-        preserveState:true,
-        onSuccess:()=>q.notify({'type':'positive',message:'Registration success'})
+const reset=e=>{
+    form.reset();
+}
+const submit = e => {
+    form.post(route('register.store'), {
+        preserveState: true,
+        onSuccess: () => q.notify({'type': 'positive', message: 'Registration success'})
     })
 }
 </script>

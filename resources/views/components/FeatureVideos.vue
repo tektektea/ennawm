@@ -23,14 +23,14 @@
                     class="w-full h-fit"
                     :width="width"
                     height="550px"
-                    @ready="slide=0"
                     :src="item.trailer_url"
                      />
                 <div class="p-4 absolute top-1/2">
                     <q-btn v-if="authenticated" :href="route('video.show',item.id)" class="w-24" color="accent" label="Play" icon="play_arrow"/>
                     <q-btn v-else :href="route('video.create',item.id)" class="w-24" color="accent" :label="'Rent : Rs '+item.price" icon="play_arrow"/>
-                    <div class="mt-6 text-md font-bold text-gray-50">{{item?.title}}</div>
-                    <div class="mt-6 text-sm font-semibold text-gray-50">{{item?.description}}</div>
+                    <div class="mt-2 p-2 bg-secondary text-md font-bold text-gray-50">{{item?.title}}</div>
+                    <div class="mt-2 p-2 bg-secondary text-md font-bold text-gray-50">Amount Rs.{{item?.price}}</div>
+                    <div class="mt-2 p-2 bg-secondary text-sm font-semibold text-gray-50">{{item?.description}}</div>
 
                 </div>
             </div>

@@ -47,10 +47,11 @@ class RentController extends Controller
                 'remark'=>'rest',
                 'otp' => $result['otp'],
                 'playback_info' => $result['playbackInfo'],
+                'rent_at' => now(),
                 'ttl' => '600',
             ]);
         }else{
-            $expire = now()->greaterThan($rental->created_at->addSeconds($rental->ttl));
+            $expire = now()->greaterThan($rental->rent_at->addSeconds($rental->ttl));
             if ($expire) {
                 $rental->update([
                     'user_id' => $user->id,
@@ -59,6 +60,7 @@ class RentController extends Controller
                     'otp' => $result['otp'],
                     'playback_info' => $result['playbackInfo'],
                     'ttl' => '600',
+                    'rent_at' => now(),
                 ]);
             }
         }

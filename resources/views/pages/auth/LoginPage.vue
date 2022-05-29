@@ -1,7 +1,7 @@
 <template>
     <div class="bg-white grid md:grid-cols-5 h-screen w-screen dark:bg-gray-900">
 
-        <div class="flex col-span-2 justify-center h-screen">
+        <div class="flex col-span-5  md:col-span-2 justify-center h-screen">
             <div class="flex items-center w-full  px-6 mx-auto lg:w-4/6">
                 <div class="flex-1">
                     <div class="text-center">
@@ -24,7 +24,7 @@
                                          id="email"/>
                             </div>
 
-                            <div class="mt-6">
+                            <div class="mt-2">
                                 <div class="flex justify-between mb-2">
                                     <label for="password" class="text-sm text-gray-600 dark:text-gray-200">Password</label>
                                     <a :href="route('password.request')" class="text-sm text-gray-400 focus:text-blue-500 hover:text-blue-500 hover:underline">Forgot password?</a>
@@ -45,6 +45,9 @@
                                     </template>
                                 </q-input>
                             </div>
+                            <div class="mt-2">
+                                <q-checkbox v-model="form.remember" label="Remember me?"/>
+                            </div>
 
                             <div class="mt-6">
                                 <button type="submit"
@@ -61,7 +64,7 @@
                 </div>
             </div>
         </div>
-        <div class="bg-primary col-span-3"/>
+        <div class="bg-primary col-span-5 md:col-span-3"/>
     </div>
 </template>
 <script setup>
@@ -78,7 +81,8 @@ const localState=reactive({
 const q = useQuasar();
 const form = useForm({
     email:'',
-    password:''
+    password:'',
+    remember: false,
 });
 const submit=e=>{
     form.post(route('login'), {

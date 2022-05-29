@@ -39,8 +39,17 @@ const error=computed(()=>usePage().props.value?.error)
 const position = ref(0);
 const headerClass=computed(()=>position.value===0?['bg-transparent' ,'text-gray-100', 'font-semibold']:['bg-primary', 'shadow-md' ,'text-gray-100', 'font-semibold'])
 
-watch(success,(newVal)=>{
+watch(success,(newVal,oldValue)=>{
     console.log("New val "+newVal)
+    if (oldValue !== newVal) {
+        !!newVal && q.notify({type:'positive',message:newVal});
+    }
+})
+watch(error,(newVal,oldValue)=>{
+    console.log("New val "+newVal)
+    if (oldValue !== newVal) {
+        !!newVal && q.notify({type:'negative',message:newVal});
+    }
 })
 const onScroll=val=>{
     console.log(val);
