@@ -87,6 +87,7 @@ class PaymentController extends Controller
                 'otp' => $result['otp'],
                 'playback_info' => $result['playbackInfo'],
                 'ttl' => '1800',
+                'rent_at' => now(),
             ]);
 
             return Redirect::route('video.show', ['video' => $video->id]);

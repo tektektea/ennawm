@@ -12,7 +12,6 @@
         navigation
         padding
         arrows
-        height="600px"
         class="bg-transparent text-white"
     >
         <q-carousel-slide v-for="(item,i) in videos"
@@ -22,7 +21,6 @@
                 <YouTube
                     class="w-full h-fit"
                     :width="width"
-                    height="550px"
                     :src="item.trailer_url"
                      />
                 <div class="p-4 absolute top-1/2">
