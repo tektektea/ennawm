@@ -12,6 +12,11 @@ class Rent extends Model
 
     protected $fillable = ['user_id','rent_at', 'video_id', 'otp','playback_info', 'ttl','remark'];
 
+    protected $dates = [
+    'created_at',
+    'updated_at',
+    'rent_at'
+];
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
