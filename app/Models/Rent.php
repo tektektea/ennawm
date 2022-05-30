@@ -11,7 +11,7 @@ class Rent extends Model
     use HasFactory;
 
     protected $fillable = ['user_id','rent_at', 'video_id', 'otp','playback_info', 'ttl','remark'];
-
+    protected $appends = ['expired'];
     protected $dates = [
     'created_at',
     'updated_at',
@@ -22,6 +22,10 @@ class Rent extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function getExpiredAttribute()
+    {
+        return !$this->rent_at->addSeconds($this->ttl)?->isFuture() ?? false;
+    }
     public function video(): BelongsTo
     {
         return $this->belongsTo(Video::class);

@@ -18,6 +18,12 @@ class RentController extends Controller
 {
     public function create(Request $request,Video $video)
     {
+        $request->user();
+        $user = new User();
+        $rent=$user->rents()->where('video_id', $video->id)->first();
+        if (!blank($rent) && !$rent->expired ) {
+            return Redirect::route('video.show', ['video' => $video->id]);
+        }
         return Inertia::render('front/video/VideoRent',[
             'video'=>$video
         ]);
