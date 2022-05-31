@@ -6,6 +6,7 @@ use App\Models\Payment;
 use App\Models\Rent;
 use App\Models\User;
 use App\Models\Video;
+use App\Utils\RentUtil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Redirect;
@@ -18,8 +19,7 @@ class RentController extends Controller
 {
     public function create(Request $request,Video $video)
     {
-        $request->user();
-        $user = new User();
+        $user=$request->user();
         $rent=$user->rents()->where('video_id', $video->id)->first();
         if (!blank($rent) && !$rent->expired ) {
             return Redirect::route('video.show', ['video' => $video->id]);
@@ -73,5 +73,17 @@ class RentController extends Controller
 
         Session::flash('success', 'You have rented the video successfully');
         return Redirect::route('video.show', ['video'=>$video->id]);
+    }
+
+    public function rentedVideos(Request $request)
+    {
+        $user = $request->user();
+        $ids = $user->rents()->whereDate('rent_at', '>=', now()->subtract('second', RentUtil::RENT_DUARATION_IN_SECOND))
+            ->pluck('video_id')??[];
+        $videos = Video::query()->findMany($ids);
+        return \inertia('front/video/MyVideoPage', ['videos' => $videos]);
+
+
+
     }
 }

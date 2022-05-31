@@ -33,6 +33,7 @@ onMounted(()=>{
         // the container can be any DOM element on website
         container: document.querySelector("#embedBox"),
     });
+    window.location = route('video.show');
 
 // you can directly call any methods of VdoPlayer class from here. e.g:
 // video.addEventListener(`load`, () => {

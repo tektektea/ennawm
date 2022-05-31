@@ -37,6 +37,9 @@ Route::resource('video', VideoController::class)->middleware('auth');
 Route::get('free', [VideoController::class, 'free'])
     ->name('video.free');
 
+Route::get('rents', [\App\Http\Controllers\RentController::class, 'rentedVideos'])
+    ->middleware('auth')
+    ->name('video.rented');
 
 Route::get('rent/{video}', [\App\Http\Controllers\RentController::class, 'create'])
     ->name('rent.create')

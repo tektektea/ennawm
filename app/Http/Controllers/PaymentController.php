@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Video;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Redirect;
@@ -23,6 +24,7 @@ class PaymentController extends Controller
         $this->key = env('PAYMENT_KEY');
         $this->secret = env('PAYMENT_SECRET');
     }
+
 
     public function createOrder(Request $request,Video $video)
     {
@@ -43,7 +45,7 @@ class PaymentController extends Controller
         ]);
         $callbackUrl = route('callback.url',['payment'=>$payment->id,'video'=>$video->id]);
 
-        return inertia('front/video/VideoRent',[
+        return \inertia('front/video/VideoRent',[
             'video' => $video,
             'order_id' => $response['id'],
             'amount'=>$response['amount'],
@@ -90,7 +92,9 @@ class PaymentController extends Controller
                 'rent_at' => now(),
             ]);
 
-            return Redirect::route('video.show', ['video' => $video->id]);
+
+            return \redirect()->action([VideoController::class, 'show'],['video'=>$video->id]);
+
         }
         return Inertia::render('font/payment/ErrorPage.vue', [
             'data' => $request->all(),

@@ -27,6 +27,7 @@
 import FrontLayout from "../../../layouts/FrontLayout.vue";
 import {computed, onMounted} from "vue";
 import YouTube from 'vue3-youtube'
+import axios from 'axios';
 import {useQuasar} from "quasar";
 import {usePage} from "@inertiajs/inertia-vue3";
 import {Inertia} from "@inertiajs/inertia";
@@ -64,11 +65,16 @@ const rent=()=>{
     var razorpay = new Razorpay(options);
     razorpay.open();
 }
-const rentVideo=vid=>{
+
+const rentVideo=video=>{
+    const url=`http://localhost:8000/api/create-order/${video.id}`
+    const prod=`http://ennawm.tbccarrental.com/api/create-order/${video.id}`
+
     if (props.order_id || props.key) {
         rent();
     }else {
-        Inertia.post(route('payment.create',{id:vid.id}),{},{
+        Inertia.post(route('payment.create',{id:video.id}),{},{
+            replace:true,
             onError:err=>q.notify({type:'negative',message:err?.toString() || 'Something went wrong'}),
             onSuccess:e=>{
                 rent();

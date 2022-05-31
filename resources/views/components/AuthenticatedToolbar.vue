@@ -5,15 +5,15 @@
                 <q-icon size="32px" name="play_arrow" color="accent"/>
                 <div class="text-xl font-medium">Ennawm tv</div>
             </div>
-            <q-item class="xs-hide">
-                <q-item-section><q-item-label>Movies</q-item-label></q-item-section>
-            </q-item>
-            <q-item class="xs-hide">
-                <q-item-section><q-item-label>Series</q-item-label></q-item-section>
-            </q-item>
-            <q-item class="xs-hide">
-                <q-item-section><q-item-label>Short film</q-item-label></q-item-section>
-            </q-item>
+<!--            <q-item class="xs-hide">-->
+<!--                <q-item-section><q-item-label>Movies</q-item-label></q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item class="xs-hide">-->
+<!--                <q-item-section><q-item-label>Series</q-item-label></q-item-section>-->
+<!--            </q-item>-->
+<!--            <q-item class="xs-hide">-->
+<!--                <q-item-section><q-item-label>Short film</q-item-label></q-item-section>-->
+<!--            </q-item>-->
         </div>
         <div class="flex gap-2">
             <q-btn :href="route('video.free')" color="accent" label="Free Video"/>
@@ -24,7 +24,7 @@
                             <q-item-label>Profile</q-item-label>
                         </q-item-section>
                     </q-item>
-                    <q-item clickable>
+                    <q-item :href="route('video.rented')" clickable>
                         <q-item-section>
                             <q-item-label>Rented videos</q-item-label>
                         </q-item-section>

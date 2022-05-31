@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Inertia\Middleware;
@@ -38,8 +39,9 @@ class HandleInertiaRequests extends Middleware
         return array_merge(parent::share($request), [
             'versions' => [
                 'php' => PHP_VERSION,
-                'laravel' => \Illuminate\Foundation\Application::VERSION
+                'laravel' => Application::VERSION
             ],
+            'env' => env('APP_ENV'),
             'user' => $request->user(),
             'success' => Session::get('success'),
             'error' => Session::get('error'),
