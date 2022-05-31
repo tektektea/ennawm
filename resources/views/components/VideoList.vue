@@ -1,6 +1,6 @@
 <template>
     <div class="grid grid-cols-1 md:grid-cols-4 gap-2 m-6">
-        <div v-for="(item,index) in videos" :key="index" class="bg-primary shadow-md rounded-t-lg">
+        <div v-for="(item,index) in videos" :key="index" class="bg-primary h-64 shadow-md rounded-t-lg">
             <img :src="item.poster_url" class="rounded-t-lg w-fit"/>
             <div class="p-8">
                 <p class="text-sm font-light">{{item?.title}}</p>
