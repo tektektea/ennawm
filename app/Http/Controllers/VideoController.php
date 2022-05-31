@@ -77,7 +77,7 @@ class VideoController extends Controller
     public function show(Request $request, Video $video)
     {
         $user = $request->user();
-        $rental = $user->rents()->where('video_id', $video?->id)->first();
+        $rental = $user->rents()->where('video_id', $video?->id)->latest()->first();
         $expire = (blank($rental) || !$rental->rent_at->addSeconds($rental->ttl)->isFuture());
 
         if ($expire) {
