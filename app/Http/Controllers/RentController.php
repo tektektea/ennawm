@@ -82,12 +82,12 @@ class RentController extends Controller
             ->pluck('video_id')??[];
         $videos = Video::query()->findMany($ids);
 
-        $data=$videos->map(function ($item) use ($user) {
+        $data=$videos->map(function (Video $item) use ($user) {
             $rent=Rent::query()->where('user_id', $user->id)
                 ->where('video_id', $item->id)->latest()->first();
             $expired = blank($rent) || $rent->rent_at->addSeconds($rent->ttl)->lessThan(now());
             return [
-                ...$item->toArray(),
+                ...$item->withoutRelations()->toArray(),
                 'expired'=>$expired
             ];
         });

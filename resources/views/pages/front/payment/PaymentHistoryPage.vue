@@ -3,8 +3,8 @@
         <template #content>
             <q-page class="container mx-auto">
                 <p class="text-2xl text-gray-50">Payment history</p>
-                <q-list class="bg-primary shadow-md rounded-borders" separator>
-                    <q-item class="p-6 text-gray-50" v-for="item in payments" :key="item.id">
+                <q-list class="bg-primary shadow-md text-gray-50 rounded-borders" dark separator>
+                    <q-item class="p-8" v-for="item in payments" :key="item.id">
                         <q-item-section>
                             <q-item-label>Order ID: {{item.order_id}}</q-item-label>
                             <q-item-label>Amount: {{item.amount}}</q-item-label>
