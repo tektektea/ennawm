@@ -87,7 +87,10 @@ class RentController extends Controller
                 ->where('video_id', $item->id)->latest()->first();
             $expired = blank($rent) || $rent->rent_at->addSeconds($rent->ttl)->lessThan(now());
             return [
-                ...$item->withoutRelations()->toArray(),
+                'id'=>$item->id,
+                'title'=>$item->title,
+                'price'=>$item->price,
+                'poster_url' => $item->poster_url,
                 'expired'=>$expired
             ];
         });
