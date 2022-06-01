@@ -29,7 +29,7 @@
                             <q-item-label>Rented videos</q-item-label>
                         </q-item-section>
                     </q-item>
-                    <q-item clickable>
+                    <q-item :href="route('payment.list')" clickable>
                         <q-item-section>
                             <q-item-label>Payment history</q-item-label>
                         </q-item-section>

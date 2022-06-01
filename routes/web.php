@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\VideoController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -26,7 +27,7 @@ Route::get('/admin', function () {
         'laravelVersion' => Application::VERSION,
         'phpVersion' => PHP_VERSION,
     ]);
-})->name('dashboard');
+})->name('dashboard')->middleware('auth');
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -48,11 +49,14 @@ Route::post('rent/{video}', [\App\Http\Controllers\RentController::class, 'store
     ->name('rent.store')
     ->middleware('auth');
 
-Route::post('payment/{video}', [\App\Http\Controllers\PaymentController::class, 'createOrder'])
+Route::post('payment/{video}', [PaymentController::class, 'createOrder'])
     ->name('payment.create')
     ->middleware('auth');
-Route::post('rent/{video}/payment/{payment}',[\App\Http\Controllers\PaymentController::class,'postPayment'])->name('callback.url');
+Route::post('rent/{video}/payment/{payment}',[PaymentController::class,'postPayment'])->name('callback.url');
 
+Route::group(['prefix' => 'payment','middleware'=>'auth'], function () {
+    Route::get('list', [PaymentController::class, 'list'])->name('payment.list');
+});
 
 
 require __DIR__.'/auth.php';

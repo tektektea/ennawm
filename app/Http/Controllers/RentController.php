@@ -78,10 +78,20 @@ class RentController extends Controller
     public function rentedVideos(Request $request)
     {
         $user = $request->user();
-        $ids = $user->rents()->whereDate('rent_at', '>=', now()->subtract('second', RentUtil::RENT_DUARATION_IN_SECOND))
+        $ids = $user->rents()
             ->pluck('video_id')??[];
         $videos = Video::query()->findMany($ids);
-        return \inertia('front/video/MyVideoPage', ['videos' => $videos]);
+
+        $data=$videos->map(function ($item) use ($user) {
+            $rent=Rent::query()->where('user_id', $user->id)
+                ->where('video_id', $item->id)->latest()->first();
+            $expired = blank($rent) || $rent->rent_at->addSeconds($rent->ttl)->lessThan(now());
+            return [
+                ...$item->toArray(),
+                'expired'=>$expired
+            ];
+        });
+        return \inertia('front/video/MyVideoPage', ['videos' => $data]);
 
 
 

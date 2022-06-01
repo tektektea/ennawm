@@ -1,7 +1,7 @@
 <template>
     <FrontLayout>
         <template #content>
-            <q-page class="container mx-auto">
+            <q-page>
                 <div class="relative w-full h-full">
                     <YouTube
                         class="w-full h-fit"
@@ -83,7 +83,7 @@ const rentVideo=video=>{
     }
 
 }
-const width=computed(()=>q.screen.width-(q.screen.width*0.1))
+const width=computed(()=>q.screen.width-8)
 const height=computed(()=>q.screen.height-(q.screen.height*0.2))
 
 onMounted(() => console.log(usePage().props.value));

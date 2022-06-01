@@ -102,4 +102,11 @@ class PaymentController extends Controller
 
 
     }
+
+    public function list(Request $request)
+    {
+        $user = $request->user();
+        $list=$user->payments()->whereNotNull('status')->get();
+        return \inertia('front/payment/PaymentHistoryPage', ['payments'=>$list]);
+    }
 }

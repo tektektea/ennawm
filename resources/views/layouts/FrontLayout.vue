@@ -8,7 +8,7 @@
                 </q-toolbar>
             </q-header>
 
-            <q-page-container class="md:container mx-auto">
+            <q-page-container>
                 <slot name="content"></slot>
             </q-page-container>
 

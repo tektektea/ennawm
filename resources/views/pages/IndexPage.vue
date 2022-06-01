@@ -1,17 +1,17 @@
 <template>
     <FrontLayout>
         <template #content>
-            <div class="md:container flex flex-col md:mx-auto">
-                <div class="">
+            <div class="flex flex-col">
+                <div class="w-full">
                     <FeatureVideos :videos="$page.props.features"/>
                 </div>
-                <div class="my-6 text-white">
-                    <VideoList :videos="$page.props.features"/>
+                <div class="container mx-auto my-6 text-white">
+                    <VideoList :videos="$page.props.videos"/>
                 </div>
-                <div class="my-6 text-white">
+                <div class="container mx-auto my-6 text-white">
                     <FaqComponent/>
                 </div>
-                <div class="my-6">
+                <div class="container mx-auto my-6">
                     <DownloadAppComponent/>
                 </div>
             </div>

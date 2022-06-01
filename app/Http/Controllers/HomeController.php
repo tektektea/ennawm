@@ -13,6 +13,7 @@ class HomeController extends Controller
         $features = Video::query()->get(['id','title', 'price', 'description', 'poster_url', 'trailer_url']);
         return Inertia::render('IndexPage', [
             'features' => $features,
+            'videos' => $features,
         ]);
     }
 }
