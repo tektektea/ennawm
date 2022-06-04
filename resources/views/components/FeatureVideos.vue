@@ -1,6 +1,7 @@
 <template>
     <q-carousel
         v-model="slide"
+        :height="height+'px'"
         transition-prev="jump-right"
         transition-next="jump-left"
         swipeable
@@ -12,6 +13,7 @@
         navigation
         padding
         arrows
+    
         class="bg-transparent q-pa-none q-ma-none"
     >
         <q-carousel-slide v-for="(item,i) in videos"
@@ -21,6 +23,7 @@
             <div class="relative w-full h-full">
                 <YouTube
                     :width="width"
+                    :height="height"
                     class="w-full h-fit"
                     :src="item.trailer_url"
                      />
@@ -51,7 +54,7 @@ const q = useQuasar();
 const lorem=ref('fadfasdf')
 const slide = ref(0);
 const width=computed(()=>q.screen.width-8)
-const height=computed(()=>q.screen.height/2)
+const height=computed(()=>q.screen.height-150)
 const authenticated=computed(()=>!!usePage().props.value?.user)
 </script>
 <style>

@@ -1,6 +1,6 @@
 
 <template>
-        <q-layout @scroll="onScroll" view="hHh lpR fFf">
+        <q-layout @scroll="onScroll" view="hHh lpR fff">
 
             <q-header  :class="headerClass">
                 <q-toolbar style="height: 70px">
