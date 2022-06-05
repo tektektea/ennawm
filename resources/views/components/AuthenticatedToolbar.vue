@@ -1,5 +1,5 @@
 <template>
-    <div class="container w-full  mx-auto shadow-sm flex justify-between items-center">
+    <div class=" w-full  shadow-sm flex justify-between items-center">
         <div class="flex items-center gap-2">
             <div @click="backHome" class="flex gap-1 cursor-pointer">
                 <q-icon size="32px" name="play_arrow" color="accent"/>
