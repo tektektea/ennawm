@@ -6,6 +6,7 @@
         transition-next="jump-left"
         swipeable
         animated
+        autoplay
         control-color="white"
         prev-icon="arrow_left"
         next-icon="arrow_right"
@@ -13,7 +14,7 @@
         navigation
         padding
         arrows
-    
+
         class="bg-transparent q-pa-none q-ma-none"
     >
         <q-carousel-slide v-for="(item,i) in videos"
@@ -29,9 +30,9 @@
                      />
                 <div class="p-4 ml-24 absolute top-1/2">
                     <q-btn v-if="authenticated" :href="route('video.show',item.id)" class="w-24" color="accent" label="Play" icon="play_arrow"/>
-                    <q-btn v-else :href="route('video.create',item.id)" class="w-24" color="accent" :label="'Rent : Rs '+item.price" icon="play_arrow"/>
+                    <q-btn v-else :href="route('video.create',item.id)" class="w-24" color="accent" :label="'Rent : Rs '+formatMoney(item.price)" icon="play_arrow"/>
                     <div class="mt-2 p-2 bg-secondary text-md font-bold text-gray-50">{{item?.title}}</div>
-                    <div class="mt-2 p-2 bg-secondary text-md font-bold text-gray-50">Amount Rs.{{item?.price}}</div>
+                    <div class="mt-2 p-2 bg-secondary text-md font-bold text-gray-50">Price: {{formatMoney(item.price || 0)}}</div>
                     <div class="mt-2 p-2 bg-secondary text-sm font-semibold text-gray-50">{{item?.description}}</div>
 
                 </div>
@@ -46,11 +47,13 @@ import {computed, ref} from "vue";
 import YouTube from 'vue3-youtube'
 import {useQuasar} from "quasar";
 import {usePage} from "@inertiajs/inertia-vue3";
+import util from "../utils/util";
 
 defineProps({
     videos:Array
 })
 const q = useQuasar();
+const {formatMoney}=util()
 const lorem=ref('fadfasdf')
 const slide = ref(0);
 const width=computed(()=>q.screen.width-8)
